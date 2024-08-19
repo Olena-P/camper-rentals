@@ -42,15 +42,3 @@ export interface Review {
   reviewer_rating: number;
   comment: string;
 }
-
-export interface VehicleFilters {
-  location: string;
-  details: {
-    airConditioner?: string;
-    automatic?: string;
-    kitchen?: string;
-    TV?: string;
-    toilet?: string;
-  };
-  form: string[];
-}

@@ -1,36 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Grid, Container, Typography } from '@mui/material';
 import AdvertCard from '../../components/AdvertCard';
-import {
-  fetchAdverts,
-  VehicleFilters,
-  CamperAdvert,
-} from '../../services/camper';
+import { fetchAdverts, CamperAdvert } from '../../services/camper';
 import CustomButton from '../../components/buttons/CustomButton';
 import Filters from '../../components/Filters';
 import useFilteredAdverts from '../../hooks/useFilteredAdverts';
+import {
+  initialFilters,
+  VehicleFilters,
+} from '../../redux/filters/filterProperties';
 
 const ITEMS_PER_PAGE = 4;
 
 const Catalog = () => {
   const [adverts, setAdverts] = useState<CamperAdvert[]>([]);
   const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState<VehicleFilters>({
-    location: '',
-    details: {
-      airConditioner: '',
-      automatic: '',
-      kitchen: '',
-      TV: '',
-      toilet: '',
-    },
-    form: [],
-  });
+  const [filters, setFilters] = useState<VehicleFilters>(initialFilters);
 
-  const { filteredAdverts, handleFilterChange } = useFilteredAdverts(
-    adverts,
-    filters
-  );
+  const { filteredAdverts } = useFilteredAdverts(adverts, filters);
 
   useEffect(() => {
     const fetchAndSetAdverts = async () => {
@@ -40,10 +27,6 @@ const Catalog = () => {
 
     fetchAndSetAdverts();
   }, []);
-
-  useEffect(() => {
-    handleFilterChange(filters);
-  }, [filters, handleFilterChange]);
 
   const loadMore = () => setPage((prev) => prev + 1);
 

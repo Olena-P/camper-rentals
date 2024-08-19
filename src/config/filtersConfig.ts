@@ -1,33 +1,33 @@
 export const detailsOptions = [
   {
     id: 'airConditioner',
-    icon: '/icons/vehicle-equipment/air-conditioner.svg',
-    name: 'AC',
+    icon: '/icons/vehicle-equipment/ac.svg',
+    name: 'airConditioner',
   },
-  {
-    id: 'automatic',
-    icon: '/icons/vehicle-equipment/automatic.svg',
-    name: 'Automatic',
-  },
+  // {
+  //   id: 'automatic',
+  //   icon: '/icons/vehicle-equipment/automatic.svg',
+  //   name: 'automatic',
+  // },
   {
     id: 'kitchen',
     icon: '/icons/vehicle-equipment/kitchen.svg',
-    name: 'Kitchen',
+    name: 'kitchen',
   },
   { id: 'TV', icon: '/icons/vehicle-equipment/tv.svg', name: 'TV' },
   {
-    id: 'toilet',
-    icon: '/icons/vehicle-equipment/toilet.svg',
-    name: 'Shower/WC',
+    id: 'bathroom',
+    icon: '/icons/vehicle-equipment/bathroom.svg',
+    name: 'bathroom',
   },
 ];
 
 export const formOptions = [
-  { id: 'van', icon: '/icons/vehicle-type/van.svg', name: 'Van' },
+  { id: 'panelTruck', icon: '/icons/vehicle-type/van.svg', name: 'panelTruck' },
   {
     id: 'fullyIntegrated',
     icon: '/icons/vehicle-type/fully-integrated.svg',
-    name: 'Fully Integrated',
+    name: 'fullyIntegrated',
   },
-  { id: 'alcove', icon: '/icons/vehicle-type/alcove.svg', name: 'Alcove' },
+  { id: 'alcove', icon: '/icons/vehicle-type/alcove.svg', name: 'alcove' },
 ];

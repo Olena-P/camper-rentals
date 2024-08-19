@@ -1,6 +1,6 @@
-import { Box, Typography, Grid, Tooltip } from '@mui/material';
+import { Box, Typography, Grid } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { fetchAdverts, VehicleFilters } from '../../services/camper';
+import { fetchAdverts } from '../../services/camper';
 import CustomButton from '../buttons/CustomButton';
 import SelectController from '../forms/SelectController/SelectController';
 import { SelectChangeEvent } from '@mui/material';
@@ -12,6 +12,10 @@ import {
   GridItem,
 } from './Filters.styled';
 import { detailsOptions, formOptions } from '../../config/filtersConfig';
+import {
+  initialFilters,
+  VehicleFilters,
+} from '../../redux/filters/filterProperties';
 
 interface FiltersProps {
   filters: VehicleFilters;
@@ -23,7 +27,6 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
   const [details, setDetails] = useState(filters.details);
   const [form, setForm] = useState(filters.form);
   const [locationsOptions, setLocationsOptions] = useState<string[]>([]);
-  const [isDisabled] = useState(true);
 
   useEffect(() => {
     fetchAdverts().then((adverts) => {
@@ -58,7 +61,11 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
   };
 
   const handleFormChange = (name: string) => {
-    setForm([name]);
+    if (form.includes(name)) {
+      setForm(form.filter((item) => item !== name));
+    } else {
+      setForm([...form, name]);
+    }
   };
 
   const handleSearchFilters = () => {
@@ -66,17 +73,7 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
   };
 
   const handleClearFilters = () => {
-    const clearedFilters: VehicleFilters = {
-      location: '',
-      details: {
-        airConditioner: '',
-        automatic: '',
-        kitchen: '',
-        TV: '',
-        toilet: '',
-      },
-      form: [],
-    };
+    const clearedFilters: VehicleFilters = initialFilters;
     setLocation(clearedFilters.location);
     setDetails(clearedFilters.details);
     setForm(clearedFilters.form);
@@ -126,68 +123,41 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
         }
       />
 
-      <Box
-        sx={{
-          position: 'relative',
-          pointerEvents: isDisabled ? 'none' : 'auto',
-          opacity: isDisabled ? 0.5 : 1,
-        }}
-      >
-        {isDisabled && (
-          <Tooltip title="Coming Soon" placement="top">
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                color: 'white',
-                padding: '8px 16px',
-                borderRadius: '4px',
-              }}
-            >
-              Coming Soon
-            </Box>
-          </Tooltip>
-        )}
+      <FilterSubtitle variant="h6">Filters</FilterSubtitle>
 
-        <FilterSubtitle variant="h6">Filters</FilterSubtitle>
+      <Typography variant="subtitle1" sx={{ mt: '14px' }}>
+        Vehicle equipment
+      </Typography>
+      <StyledDivider />
+      <Grid container spacing={2}>
+        {detailsOptions.map((option) => (
+          <GridItem item xs={6} sm={4} key={option.id}>
+            <FilterIcon
+              icon={option.icon}
+              name={option.name}
+              selectedItems={Object.keys(details).filter(isDetailSelected)}
+              handleChange={handleDetailChange}
+            />
+          </GridItem>
+        ))}
+      </Grid>
 
-        <Typography variant="subtitle1" sx={{ mt: '14px' }}>
-          Vehicle equipment
-        </Typography>
-        <StyledDivider />
-        <Grid container spacing={2}>
-          {detailsOptions.map((option) => (
-            <GridItem item xs={6} sm={4} key={option.id}>
-              <FilterIcon
-                icon={option.icon}
-                name={option.name}
-                selectedItems={Object.keys(details).filter(isDetailSelected)}
-                handleChange={handleDetailChange}
-              />
-            </GridItem>
-          ))}
-        </Grid>
-
-        <Typography variant="subtitle1" sx={{ mt: '32px' }}>
-          Vehicle type
-        </Typography>
-        <StyledDivider />
-        <Grid container spacing={2}>
-          {formOptions.map((option) => (
-            <GridItem item xs={6} sm={4} key={option.id}>
-              <FilterIcon
-                icon={option.icon}
-                name={option.name}
-                selectedItems={form}
-                handleChange={handleFormChange}
-              />
-            </GridItem>
-          ))}
-        </Grid>
-      </Box>
+      <Typography variant="subtitle1" sx={{ mt: '32px' }}>
+        Vehicle type
+      </Typography>
+      <StyledDivider />
+      <Grid container spacing={2}>
+        {formOptions.map((option) => (
+          <GridItem item xs={6} sm={4} key={option.id}>
+            <FilterIcon
+              icon={option.icon}
+              name={option.name}
+              selectedItems={form}
+              handleChange={handleFormChange}
+            />
+          </GridItem>
+        ))}
+      </Grid>
 
       <Box sx={{ mt: '64px' }}>
         <CustomButton onClick={handleSearchFilters} sx={{ mr: 2 }}>
