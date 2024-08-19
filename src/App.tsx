@@ -9,6 +9,7 @@ import NavBar from './components/NavBar';
 const Home = lazy(() => import('./pages/Home'));
 const Catalog = lazy(() => import('./pages/Catalog'));
 const Favorites = lazy(() => import('./pages/Favorites'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 const App = () => {
   return (
@@ -21,7 +22,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/favorites" element={<Favorites />} />
-            <Route path="*" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </SCThemeProvider>
