@@ -51,18 +51,16 @@ const BookingForm = ({ onSubmit }: BookingFormProps) => {
         display: 'inline-flex',
         padding: '16px',
         flexDirection: 'column',
-        alignItems: 'center',
-        gap: '20px',
         borderRadius: '12px',
         border: '1px solid rgba(16, 24, 40, 0.20)',
         background: '#FFF',
       }}
     >
       <Typography variant="h2">Book your campervan now</Typography>
-      <Typography variant="subtitle2">
+      <Typography variant="subtitle2" m="8px 0 10px">
         Stay connected! We are always ready to help you.
       </Typography>
-      <Box>
+      <Box mb="24px">
         <TextFieldController
           name="name"
           control={control}

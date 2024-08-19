@@ -10,7 +10,6 @@ const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        html: { overflowY: 'scroll !important' },
         body: {
           backgroundColor: '#ffffff',
         },
@@ -101,6 +100,7 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
+          margin: '14px 0 8px',
           '& .MuiOutlinedInput-root': {
             background: palette.background.default,
           },
