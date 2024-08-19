@@ -8,29 +8,21 @@ export const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   gap: '10px',
   borderRadius: '200px',
   padding: '16px 60px',
-  fontFamily: theme.typography.button.fontFamily,
-  fontSize: theme.typography.button.fontSize,
   fontStyle: theme.typography.button.fontStyle,
-  fontWeight: theme.typography.button.fontWeight,
-  lineHeight: theme.typography.button.lineHeight,
-  letterSpacing: theme.typography.button.letterSpacing,
   textTransform: 'none',
   boxShadow: 'none',
   '&.MuiButton-contained': {
-    backgroundColor: '#E44848',
+    backgroundColor: theme.palette.primary,
     color: '#FFF',
     padding: '16px 32px',
     minWidth: '172px',
-    '&:hover': {
-      backgroundColor: '#D84343',
-    },
   },
   '&.MuiButton-outlined': {
-    color: '#101828',
+    color: theme.palette.text.primary,
     border: '1px solid rgba(71, 84, 103, 0.20)',
     padding: '16px 32px',
     '&:hover': {
-      borderColor: '#E44848',
+      borderColor: theme.palette.primary,
     },
   },
 }));

@@ -1,42 +1,42 @@
-import { Box, Typography, Avatar, Rating } from '@mui/material';
-import { Review } from '../../../../../../services/camper';
+import { Typography, Rating, Box } from '@mui/material';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
+import { Review } from '../../../../../../services/camper';
+import {
+  ReviewContainer,
+  ReviewHeader,
+  StyledAvatar,
+  StyledRatingBox,
+} from './ReviewList.styled';
 
 const ReviewItem = ({ review }: { review: Review }) => (
-  <Box>
-    <Box display="flex" alignItems="center" sx={{ gap: '16px' }}>
-      <Avatar
-        sx={{
-          width: '60px',
-          height: '60px',
-          borderRadius: '60px',
-          backgroundColor: '#F2F4F7',
-          color: 'primary.main',
-          fontSize: '24px',
-          fontWeight: 'bold',
-        }}
-      >
+  <ReviewContainer>
+    <ReviewHeader>
+      <StyledAvatar>
         {review.reviewer_name.charAt(0).toUpperCase()}
-      </Avatar>
+      </StyledAvatar>
       <Box>
         <Typography variant="subtitle1">{review.reviewer_name}</Typography>
-        <Rating
-          value={review.reviewer_rating}
-          precision={0.5}
-          readOnly
-          size="small"
-          sx={{ mt: '4px' }}
-          icon={<StarRateRoundedIcon fontSize="inherit" />}
-          emptyIcon={
-            <StarRateRoundedIcon fontSize="inherit" sx={{ color: '#F2F4F7' }} />
-          }
-        />
+        <StyledRatingBox>
+          <Rating
+            value={review.reviewer_rating}
+            precision={0.5}
+            readOnly
+            size="small"
+            icon={<StarRateRoundedIcon fontSize="inherit" />}
+            emptyIcon={
+              <StarRateRoundedIcon
+                fontSize="inherit"
+                sx={{ color: '#F2F4F7' }}
+              />
+            }
+          />
+        </StyledRatingBox>
       </Box>
-    </Box>
+    </ReviewHeader>
     <Typography variant="body1" mt={1}>
       {review.comment}
     </Typography>
-  </Box>
+  </ReviewContainer>
 );
 
 const ReviewList = ({ reviews }: { reviews: Review[] }) => (

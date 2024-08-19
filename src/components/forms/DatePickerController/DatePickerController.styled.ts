@@ -16,14 +16,14 @@ export const StyledDatePickerWrapper = styled(Box)(({ theme }) => ({
     borderBottom: 'none',
   },
   '& .react-datepicker__current-month': {
-    color: '#101828',
+    color: theme.palette.text.primary,
     fontWeight: 500,
     fontSize: '16px',
     lineHeight: '20px',
   },
   '& .react-datepicker__day-name': {
     textTransform: 'uppercase',
-    color: '#475467',
+    color: theme.palette.text.secondary,
     fontWeight: 600,
     fontSize: '12px',
   },
@@ -41,10 +41,10 @@ export const StyledDatePickerWrapper = styled(Box)(({ theme }) => ({
   '& .react-datepicker__navigation': {
     top: '16px',
     '&.react-datepicker__navigation--previous': {
-      borderRightColor: '#101828',
+      borderRightColor: theme.palette.text.primary,
     },
     '&.react-datepicker__navigation--next': {
-      borderLeftColor: '#101828',
+      borderLeftColor: theme.palette.text.primary,
     },
   },
 }));
@@ -63,7 +63,7 @@ export const HeaderButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
-export const HeaderDate = styled(Typography)({
+export const HeaderDate = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
-  color: '#101828',
-});
+  color: theme.palette.text.primary,
+}));

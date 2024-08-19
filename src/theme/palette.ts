@@ -2,7 +2,7 @@ import { grey } from '@mui/material/colors';
 
 export const palette = {
   primary: {
-    main: '#E44848',
+    main: '#673030',
   },
   secondary: {
     main: '#FFC531',

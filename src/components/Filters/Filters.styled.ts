@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Typography, Grid, Divider } from '@mui/material';
+import { Box, Typography, Grid, Divider, Theme } from '@mui/material';
 
 export const StyledBox = styled(Box)(() => ({
   display: 'flex',
@@ -14,8 +14,10 @@ export const StyledBox = styled(Box)(() => ({
 }));
 
 export const FilterIconBox = styled(StyledBox)(
-  ({ selected }: { selected: boolean }) => ({
-    border: selected ? '1px solid #E44848' : '1px solid rgba(0, 0, 0, 0.23)',
+  ({ selected, theme }: { selected: boolean; theme: Theme }) => ({
+    border: selected
+      ? `1px solid ${theme.palette.primary.main}`
+      : '1px solid rgba(0, 0, 0, 0.23)',
     mixBlendMode: selected ? 'multiply' : 'normal',
   })
 );

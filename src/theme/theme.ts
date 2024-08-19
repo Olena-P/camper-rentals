@@ -49,9 +49,6 @@ const theme = createTheme({
           color: '#FFF',
           backgroundColor: palette.primary.main,
           padding: '16px 60px',
-          '&:hover': {
-            backgroundColor: '#D84343',
-          },
         },
         outlined: {
           color: palette.text.primary,
