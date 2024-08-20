@@ -68,9 +68,9 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
     }
   };
 
-  const handleSearchFilters = () => {
-    onChange({ location, details, form });
-  };
+  // const handleSearchFilters = () => {
+  //   onChange({ location, details, form });
+  // };
 
   const handleClearFilters = () => {
     const clearedFilters: VehicleFilters = initialFilters;
@@ -160,9 +160,9 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
       </Grid>
 
       <Box sx={{ mt: '64px' }}>
-        <CustomButton onClick={handleSearchFilters} sx={{ mr: 2 }}>
+        {/* <CustomButton onClick={handleSearchFilters} sx={{ mr: 2 }}>
           Search
-        </CustomButton>
+        </CustomButton> */}
         <CustomButton variant="outlined" onClick={handleClearFilters}>
           Clear Filters
         </CustomButton>

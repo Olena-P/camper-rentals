@@ -24,7 +24,7 @@ const Home = () => {
             </Typography>
 
             <Box mb={4}>
-              <Typography variant="body1" color="text.primary" paragraph>
+              <Typography color="text.primary" paragraph>
                 We offer a wide range of campers to suit your needs, whether
                 you're looking for a cozy getaway or a fully equipped adventure
                 vehicle. Our fleet is maintained to the highest standards,

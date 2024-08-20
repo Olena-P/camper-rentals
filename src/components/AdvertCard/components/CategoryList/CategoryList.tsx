@@ -9,7 +9,7 @@ interface CategoryListProps {
 
 const CategoryList = ({ details }: CategoryListProps) => {
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+    <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
       {Object.entries(details).map(([key, value], index) => {
         if (value === 0) return null;
 
@@ -17,7 +17,7 @@ const CategoryList = ({ details }: CategoryListProps) => {
           detailsConfig[key as keyof typeof detailsConfig] || {};
 
         return (
-          <CategoryItem key={index}>
+          <CategoryItem component="li" key={index}>
             {icon && <img src={icon} alt={name} style={{ width: '20px' }} />}
             {!(value === 1 && key !== 'beds') && (
               <Typography variant="body2" color="textSecondary">

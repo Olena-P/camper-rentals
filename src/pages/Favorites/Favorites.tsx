@@ -7,7 +7,7 @@ const Favorites = () => {
 
   return (
     <Container maxWidth="xl" sx={{ padding: { xs: '20px', sm: '32px 64px' } }}>
-      <Typography variant="h3" color="primary" gutterBottom>
+      <Typography variant="h1" color="primary" paragraph>
         Your Favorite Campers
       </Typography>
       <Grid container spacing={4}>

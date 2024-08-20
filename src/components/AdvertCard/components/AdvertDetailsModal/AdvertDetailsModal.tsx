@@ -65,7 +65,7 @@ const AdvertDetailsModal = ({
             </Grid>
           ))}
         </Grid>
-        <Typography variant="body1">{advert.description}</Typography>
+        <Typography>{advert.description}</Typography>
       </>
       <TabsSection activeTab={activeTab} handleTabChange={handleTabChange} />
 

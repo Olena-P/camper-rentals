@@ -1,7 +1,8 @@
-import { Dialog, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { ReactNode } from 'react';
 import {
+  StyledDialog,
   StyledDialogContent,
   StyledDialogTitle,
   StyledBox,
@@ -25,29 +26,7 @@ const CustomModal = ({
   children,
 }: CustomModalProps) => {
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        style: {
-          height: '720px',
-          width: '100%',
-          maxWidth: '982px',
-          padding: '40px',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          gap: '8px',
-          flexShrink: 0,
-          borderRadius: '20px',
-          background: '#FFF',
-        },
-      }}
-      BackdropProps={{
-        style: {
-          backgroundColor: '#11121366',
-        },
-      }}
-    >
+    <StyledDialog open={open} onClose={onClose}>
       <StyledDialogTitle>
         <StyledBox>
           <Typography variant="h1">{title}</Typography>
@@ -66,7 +45,7 @@ const CustomModal = ({
       <StyledDialogContent dividers={false} sx={{ padding: 0 }}>
         {children}
       </StyledDialogContent>
-    </Dialog>
+    </StyledDialog>
   );
 };
 

@@ -33,9 +33,7 @@ const ReviewItem = ({ review }: { review: Review }) => (
         </StyledRatingBox>
       </Box>
     </ReviewHeader>
-    <Typography variant="body1" mt={1}>
-      {review.comment}
-    </Typography>
+    <Typography mt={1}>{review.comment}</Typography>
   </ReviewContainer>
 );
 

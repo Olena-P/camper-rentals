@@ -1,5 +1,29 @@
 import { styled } from '@mui/material/styles';
-import { DialogContent, DialogTitle, IconButton, Box } from '@mui/material';
+import {
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Box,
+  Dialog,
+} from '@mui/material';
+
+export const StyledDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiPaper-root': {
+    height: '720px',
+    width: '100%',
+    maxWidth: '982px',
+    padding: theme.breakpoints.down('md') ? '24px' : '40px',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: '8px',
+    flexShrink: 0,
+    borderRadius: '20px',
+    background: '#FFF',
+  },
+  '& .MuiBackdrop-root': {
+    backgroundColor: '#11121366',
+  },
+}));
 
 export const StyledDialogContent = styled(DialogContent)(() => ({
   flex: 1,
