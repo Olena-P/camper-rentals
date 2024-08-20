@@ -25,3 +25,6 @@ dist-ssr
 
 *.todo
 project_structure.txt
+
+# Local Netlify folder
+.netlify
