@@ -53,10 +53,10 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
     setLocation(event.target.value);
   };
 
-  const handleDetailChange = (name: string) => {
+  const handleDetailChange = (id: string) => {
     setDetails((prev) => ({
       ...prev,
-      [name]: prev[name as keyof typeof details] === 'true' ? '' : 'true',
+      [id]: prev[id as keyof typeof details] === 'true' ? '' : 'true',
     }));
   };
 
@@ -80,23 +80,25 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
     onChange(clearedFilters);
   };
 
-  const isDetailSelected = (key: string) =>
-    details[key as keyof typeof details] === 'true';
+  const isDetailSelected = (id: string) =>
+    details[id as keyof typeof details] === 'true';
 
   const FilterIcon = ({
     icon,
+    id,
     name,
     selectedItems,
     handleChange,
   }: {
     icon: string;
+    id: string;
     name: string;
     selectedItems: string[];
-    handleChange: (name: string) => void;
+    handleChange: (id: string) => void;
   }) => (
     <FilterIconBox
-      selected={selectedItems.includes(name)}
-      onClick={() => handleChange(name)}
+      selected={selectedItems.includes(id)}
+      onClick={() => handleChange(id)}
     >
       <img src={icon} alt={name} style={{ width: '32px' }} />
       <Typography variant="body2" textAlign="center">
@@ -134,6 +136,7 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
           <GridItem item xs={6} sm={4} key={option.id}>
             <FilterIcon
               icon={option.icon}
+              id={option.id}
               name={option.name}
               selectedItems={Object.keys(details).filter(isDetailSelected)}
               handleChange={handleDetailChange}
@@ -151,6 +154,7 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
           <GridItem item xs={6} sm={4} key={option.id}>
             <FilterIcon
               icon={option.icon}
+              id={option.id}
               name={option.name}
               selectedItems={form}
               handleChange={handleFormChange}
