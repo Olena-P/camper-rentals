@@ -87,7 +87,6 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
     icon,
     id,
     name,
-    selectedItems,
     handleChange,
   }: {
     icon: string;
@@ -97,7 +96,7 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
     handleChange: (id: string) => void;
   }) => (
     <FilterIconBox
-      selected={selectedItems.includes(id)}
+      selected={isDetailSelected(id)}
       onClick={() => handleChange(id)}
     >
       <img src={icon} alt={name} style={{ width: '32px' }} />
