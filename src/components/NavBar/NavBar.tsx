@@ -38,7 +38,7 @@ const NavBar = () => {
             <LogoText>Camper Rent</LogoText>
           </NavLink>
         </LogoContainer>
-        <NavLinksContainer>
+        <NavLinksContainer component="nav">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/catalog">Catalog</NavLink>
           <NavLink to="/favorites">Favorites</NavLink>

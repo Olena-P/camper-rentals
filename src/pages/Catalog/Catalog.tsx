@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { Grid, Container, Typography } from '@mui/material';
 import AdvertCard from '../../components/AdvertCard';
 import { fetchAdverts, CamperAdvert } from '../../services/camper';
@@ -16,19 +16,23 @@ const Catalog = () => {
   const [adverts, setAdverts] = useState<CamperAdvert[]>([]);
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState<VehicleFilters>(initialFilters);
+  const [isLoading, setIsLoading] = useState(true);
 
+  const [isPending, startTransition] = useTransition();
   const { filteredAdverts } = useFilteredAdverts(adverts, filters);
 
   useEffect(() => {
     const fetchAndSetAdverts = async () => {
+      setIsLoading(true);
       const data = await fetchAdverts();
       setAdverts(data);
+      setIsLoading(false);
     };
 
     fetchAndSetAdverts();
   }, []);
 
-  const loadMore = () => setPage((prev) => prev + 1);
+  const loadMore = () => startTransition(() => setPage((prev) => prev + 1));
 
   const hasMoreItems = filteredAdverts.length > page * ITEMS_PER_PAGE;
 
@@ -39,12 +43,18 @@ const Catalog = () => {
           <Filters
             filters={filters}
             onChange={(newFilters) => {
-              setFilters(newFilters);
+              startTransition(() => setFilters(newFilters));
             }}
           />
         </Grid>
         <Grid container item xs={12} lg={8} spacing={4}>
-          {filteredAdverts.length === 0 ? (
+          {isLoading ? (
+            <Grid item xs={12}>
+              <Typography variant="h6" color="textSecondary">
+                Loading campers...
+              </Typography>
+            </Grid>
+          ) : filteredAdverts.length === 0 && !isPending ? (
             <Grid item xs={12}>
               <Typography variant="h6" color="textSecondary">
                 No campers match your search criteria.
@@ -57,10 +67,21 @@ const Catalog = () => {
               </Grid>
             ))
           )}
-          {hasMoreItems && (
+          {isPending && (
             <Grid item xs={12}>
-              <CustomButton variant="outlined" onClick={loadMore}>
-                Load More
+              <Typography variant="h6" color="textSecondary">
+                Loading...
+              </Typography>
+            </Grid>
+          )}
+          {hasMoreItems && !isLoading && (
+            <Grid item xs={12}>
+              <CustomButton
+                variant="outlined"
+                onClick={loadMore}
+                disabled={isPending}
+              >
+                {isPending ? 'Loading...' : 'Load More'}
               </CustomButton>
             </Grid>
           )}

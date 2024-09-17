@@ -35,8 +35,9 @@ export const StyledCardContent = styled(CardContent)({
   gap: '24px',
 });
 
-export const HeaderBox = styled(Box)({
+export const HeaderBox = styled('figcaption')({
   display: 'flex',
+  flexWrap: 'wrap',
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
@@ -44,12 +45,15 @@ export const HeaderBox = styled(Box)({
 
 export const PriceBox = styled(Box)({
   display: 'flex',
+  flexWrap: 'wrap',
   alignItems: 'center',
+  justifyContent: 'space-between',
   gap: '12px',
 });
 
 export const InfoBox = styled(Box)({
   display: 'flex',
+  flexWrap: 'wrap',
   alignItems: 'center',
   gap: '16px',
 });

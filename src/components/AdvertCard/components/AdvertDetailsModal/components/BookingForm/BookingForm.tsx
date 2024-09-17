@@ -68,6 +68,7 @@ const BookingForm = ({ onSubmit }: BookingFormProps) => {
           error={!!errors.name}
           helperText={errors.name?.message}
           id="name-field"
+          aria-label="Name"
         />
         <TextFieldController
           name="email"
@@ -76,6 +77,7 @@ const BookingForm = ({ onSubmit }: BookingFormProps) => {
           error={!!errors.email}
           helperText={errors.email?.message}
           id="email-field"
+          aria-label="Email"
         />
         <DatePickerController
           name="bookingDate"
@@ -84,6 +86,7 @@ const BookingForm = ({ onSubmit }: BookingFormProps) => {
           error={!!errors.bookingDate}
           helperText={errors.bookingDate?.message}
           id="booking-date-field"
+          aria-label="Booking Date"
         />
         <TextFieldController
           name="comment"
@@ -94,10 +97,16 @@ const BookingForm = ({ onSubmit }: BookingFormProps) => {
           error={!!errors.comment}
           helperText={errors.comment?.message}
           id="comment-field"
+          aria-label="Comment"
         />
       </Box>
 
-      <CustomButton type="submit" variant="contained" color="primary">
+      <CustomButton
+        type="submit"
+        variant="contained"
+        color="primary"
+        aria-label="Send booking form"
+      >
         Send
       </CustomButton>
     </Box>

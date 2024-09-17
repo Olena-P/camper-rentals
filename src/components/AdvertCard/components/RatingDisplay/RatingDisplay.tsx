@@ -13,7 +13,8 @@ const RatingDisplay = ({ rating, reviewCount }: RatingDisplayProps) => (
       sx={{ width: '20px', height: '20px' }}
     />
     <Typography variant="overline">
-      {rating} ({reviewCount} {reviewCount === 1 ? 'Review' : 'Reviews'})
+      {rating.toFixed(1)} ({reviewCount}{' '}
+      {reviewCount === 1 ? 'Review' : 'Reviews'})
     </Typography>
   </Box>
 );

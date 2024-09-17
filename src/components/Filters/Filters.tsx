@@ -163,10 +163,19 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
       </Grid>
 
       <Box sx={{ mt: '64px' }}>
-        {/* <CustomButton onClick={handleSearchFilters} sx={{ mr: 2 }}>
+        {/* <CustomButton
+          variant="contained"
+          aria-label="Search"
+          onClick={handleSearchFilters}
+          sx={{ mr: 2 }}
+        >
           Search
         </CustomButton> */}
-        <CustomButton variant="outlined" onClick={handleClearFilters}>
+        <CustomButton
+          variant="outlined"
+          aria-label="Clear Filters"
+          onClick={handleClearFilters}
+        >
           Clear Filters
         </CustomButton>
       </Box>

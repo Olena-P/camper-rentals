@@ -21,6 +21,9 @@ const theme = createTheme({
         li: {
           listStyle: 'none',
         },
+        figure: {
+          margin: 0,
+        },
         '::-webkit-scrollbar': {
           width: '8px',
         },

@@ -14,11 +14,12 @@ import {
   StyledCard,
   StyledCardMedia,
   StyledCardContent,
-  HeaderBox,
   PriceBox,
   InfoBox,
   StyledCardActions,
+  HeaderBox,
 } from './AdvertCard.styled';
+import useFormattedCurrency from '../../hooks/useFormattedCurrency';
 
 interface AdvertCardProps {
   advert: CamperAdvert;
@@ -28,6 +29,8 @@ const AdvertCard = ({ advert }: AdvertCardProps) => {
   const { toggleFavorite, isFavorite } = useFavorites();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const isAdvertFavorite = isFavorite(advert._id);
+
   const handleFavoriteClick = () => {
     toggleFavorite(advert);
   };
@@ -36,32 +39,34 @@ const AdvertCard = ({ advert }: AdvertCardProps) => {
     setIsModalOpen(false);
   };
 
+  const formattedPrice = useFormattedCurrency(advert.price);
+
   return (
     <>
       <StyledCard>
-        <StyledCardMedia
-          component="img"
-          image={advert.gallery[0]}
-          alt={advert.name}
-        />
+        <figure>
+          <StyledCardMedia
+            component="img"
+            image={advert.gallery[0]}
+            alt={advert.name}
+          />
+        </figure>
 
         <StyledCardContent>
           <HeaderBox>
             <Typography variant="h2">{advert.name}</Typography>
             <PriceBox>
-              <Typography variant="h2" color="textPrimary">
-                €{advert.price.toFixed(2)}
+              <Typography variant="h3" color="textPrimary">
+                {formattedPrice}
               </Typography>
               <IconButton
-                aria-label="add to favorites"
+                aria-label="Add to favorites"
+                aria-describedby="favorite-button-description"
+                aria-pressed={isAdvertFavorite}
                 onClick={handleFavoriteClick}
-                color={isFavorite(advert._id) ? 'primary' : 'default'}
+                color={isAdvertFavorite ? 'primary' : 'default'}
               >
-                {isFavorite(advert._id) ? (
-                  <FavoriteIcon />
-                ) : (
-                  <FavoriteBorderIcon />
-                )}
+                {isAdvertFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               </IconButton>
             </PriceBox>
           </HeaderBox>
@@ -72,12 +77,16 @@ const AdvertCard = ({ advert }: AdvertCardProps) => {
             />
             <LocationDisplay location={advert.location} />
           </InfoBox>
-          <EllipsisTypography variant="body2">
+          <EllipsisTypography variant="body2" maxLines={3}>
             {advert.description}
           </EllipsisTypography>
           <CategoryList details={advert.details} />
           <StyledCardActions>
-            <CustomButton onClick={() => setIsModalOpen(true)}>
+            <CustomButton
+              aria-expanded={isModalOpen}
+              aria-controls="advert-details-modal"
+              onClick={() => setIsModalOpen(true)}
+            >
               Show more
             </CustomButton>
           </StyledCardActions>

@@ -9,6 +9,7 @@ import LocationDisplay from '../LocationDisplay';
 import CustomModal from '../../../modals/CustomModal';
 import { CamperAdvert } from '../../../../services/camper';
 import CategoryList from '../CategoryList';
+import useFormattedCurrency from '../../../../hooks/useFormattedCurrency';
 
 interface AdvertDetailsModalProps {
   open: boolean;
@@ -32,6 +33,8 @@ const AdvertDetailsModal = ({
     onClose();
   };
 
+  const formattedPrice = useFormattedCurrency(advert.price);
+
   return (
     <CustomModal open={open} onClose={onClose} title={advert.name}>
       <>
@@ -42,8 +45,8 @@ const AdvertDetailsModal = ({
           />
           <LocationDisplay location={advert.location} />
         </Box>
-        <Typography variant="h1" mt={'16px'}>
-          €{advert.price}
+        <Typography variant="h3" mt={'16px'}>
+          {formattedPrice}
         </Typography>
         <Grid
           container
@@ -55,7 +58,7 @@ const AdvertDetailsModal = ({
               <CardMedia
                 component="img"
                 src={image}
-                alt={`Image ${index + 1}`}
+                alt={`Image of ${advert.name} - slide ${index + 1}`}
                 sx={{
                   height: '310px',
                   borderRadius: '10px',
@@ -65,9 +68,13 @@ const AdvertDetailsModal = ({
             </Grid>
           ))}
         </Grid>
-        <Typography>{advert.description}</Typography>
+        <Typography id="modal-description">{advert.description}</Typography>
       </>
-      <TabsSection activeTab={activeTab} handleTabChange={handleTabChange} />
+      <TabsSection
+        activeTab={activeTab}
+        handleTabChange={handleTabChange}
+        aria-label="Advert Details Tabs"
+      />
 
       {activeTab === 0 && (
         <Grid container spacing={'24px'} sx={{ paddingTop: '44px' }}>
@@ -82,7 +89,7 @@ const AdvertDetailsModal = ({
       )}
 
       {activeTab === 1 && (
-        <Grid container spacing={2} sx={{ paddingTop: '44px' }}>
+        <Grid container spacing={'24px'} sx={{ paddingTop: '44px' }}>
           <Grid item xs={12} md={6}>
             <ReviewList reviews={advert.reviews} />
           </Grid>

@@ -26,18 +26,29 @@ const CustomModal = ({
   children,
 }: CustomModalProps) => {
   return (
-    <StyledDialog open={open} onClose={onClose}>
+    <StyledDialog
+      open={open}
+      onClose={onClose}
+      aria-labelledby="modal-title"
+      aria-describedby={subtitle ? 'modal-subtitle' : undefined}
+    >
       <StyledDialogTitle>
         <StyledBox>
-          <Typography variant="h1">{title}</Typography>
-          <StyledIconButton onClick={onClose}>
+          <Typography variant="h2" id="modal-title">
+            {title}
+          </Typography>
+          <StyledIconButton onClick={onClose} aria-label="Close modal">
             <StyledCloseRoundedIcon>
               <CloseRoundedIcon />
             </StyledCloseRoundedIcon>
           </StyledIconButton>
         </StyledBox>
         {subtitle && (
-          <Typography variant="subtitle1" color="textSecondary">
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            id="modal-subtitle"
+          >
             {subtitle}
           </Typography>
         )}

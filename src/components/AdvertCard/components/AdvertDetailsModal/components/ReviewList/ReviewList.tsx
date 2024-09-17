@@ -8,7 +8,11 @@ import {
   StyledRatingBox,
 } from './ReviewList.styled';
 
-const ReviewItem = ({ review }: { review: Review }) => (
+interface ReviewItemProps {
+  review: Review;
+}
+
+const ReviewItem = ({ review }: ReviewItemProps) => (
   <ReviewContainer>
     <ReviewHeader>
       <StyledAvatar>
@@ -37,7 +41,11 @@ const ReviewItem = ({ review }: { review: Review }) => (
   </ReviewContainer>
 );
 
-const ReviewList = ({ reviews }: { reviews: Review[] }) => (
+interface ReviewListProps {
+  reviews: Review[];
+}
+
+const ReviewList = ({ reviews }: ReviewListProps) => (
   <Box>
     {reviews.length ? (
       reviews.map((review, index) => <ReviewItem key={index} review={review} />)
