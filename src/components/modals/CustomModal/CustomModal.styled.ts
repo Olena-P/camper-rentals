@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 
 export const StyledDialog = styled(Dialog)(({ theme }) => ({
+  margin: '0 10px',
   '& .MuiPaper-root': {
     height: '720px',
     width: '100%',

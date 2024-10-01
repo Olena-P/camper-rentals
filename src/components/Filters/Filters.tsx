@@ -1,9 +1,10 @@
-import { Box, Typography, Grid } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { Box, Typography, Grid, useMediaQuery, useTheme } from '@mui/material';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { fetchAdverts } from '../../services/camper';
 import CustomButton from '../buttons/CustomButton';
 import SelectController from '../forms/SelectController/SelectController';
 import { SelectChangeEvent } from '@mui/material';
+import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 import {
   FilterIconBox,
   FilterTitle,
@@ -16,6 +17,7 @@ import {
   initialFilters,
   VehicleFilters,
 } from '../../redux/filters/filterProperties';
+import CustomModal from '../modals/CustomModal';
 
 interface FiltersProps {
   filters: VehicleFilters;
@@ -23,23 +25,33 @@ interface FiltersProps {
 }
 
 const Filters = ({ filters, onChange }: FiltersProps) => {
+  const theme = useTheme();
   const [location, setLocation] = useState(filters.location);
   const [details, setDetails] = useState(filters.details);
   const [form, setForm] = useState(filters.form);
   const [locationsOptions, setLocationsOptions] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     fetchAdverts().then((adverts) => {
       const locations = Array.from(
         new Set(adverts.map((advert) => advert.location))
       );
-      if (JSON.stringify(locations) !== JSON.stringify(locationsOptions)) {
-        setLocationsOptions(locations);
-      }
+      setLocationsOptions((prevOptions) =>
+        JSON.stringify(prevOptions) !== JSON.stringify(locations)
+          ? locations
+          : prevOptions
+      );
     });
-  }, [locationsOptions]);
+  }, []);
 
-  useEffect(() => {
+  const updateFilters = useCallback(() => {
     if (
       location !== filters.location ||
       JSON.stringify(details) !== JSON.stringify(filters.details) ||
@@ -48,6 +60,10 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
       onChange({ location, details, form });
     }
   }, [location, details, form, filters, onChange]);
+
+  useEffect(() => {
+    updateFilters();
+  }, [location, details, form, updateFilters]);
 
   const handleLocationChange = (event: SelectChangeEvent<string>) => {
     setLocation(event.target.value);
@@ -61,23 +77,18 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
   };
 
   const handleFormChange = (name: string) => {
-    if (form.includes(name)) {
-      setForm(form.filter((item) => item !== name));
-    } else {
-      setForm([...form, name]);
-    }
+    setForm((prev) =>
+      prev.includes(name)
+        ? prev.filter((item) => item !== name)
+        : [...prev, name]
+    );
   };
 
-  // const handleSearchFilters = () => {
-  //   onChange({ location, details, form });
-  // };
-
   const handleClearFilters = () => {
-    const clearedFilters: VehicleFilters = initialFilters;
-    setLocation(clearedFilters.location);
-    setDetails(clearedFilters.details);
-    setForm(clearedFilters.form);
-    onChange(clearedFilters);
+    setLocation(initialFilters.location);
+    setDetails(initialFilters.details);
+    setForm(initialFilters.form);
+    onChange(initialFilters);
   };
 
   const isDetailSelected = (id: string) =>
@@ -92,7 +103,6 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
     icon: string;
     id: string;
     name: string;
-    selectedItems: string[];
     handleChange: (id: string) => void;
   }) => (
     <FilterIconBox
@@ -106,80 +116,104 @@ const Filters = ({ filters, onChange }: FiltersProps) => {
     </FilterIconBox>
   );
 
+  const renderFilters = useMemo(() => {
+    return (
+      <>
+        <FilterTitle variant="h6">Location</FilterTitle>
+        <SelectController
+          value={location}
+          onChange={handleLocationChange}
+          options={locationsOptions}
+          placeholder="City"
+          icon={
+            <img
+              src="/icons/location.svg"
+              alt="Location"
+              style={{ width: '16px' }}
+            />
+          }
+        />
+
+        <FilterSubtitle variant="h6">Filters</FilterSubtitle>
+
+        <Typography variant="subtitle1" sx={{ mt: '14px' }}>
+          Vehicle equipment
+        </Typography>
+        <StyledDivider />
+        <Grid container spacing={2}>
+          {detailsOptions.map((option) => (
+            <GridItem item xs={6} sm={4} key={option.id}>
+              <FilterIcon
+                icon={option.icon}
+                id={option.id}
+                name={option.name}
+                handleChange={handleDetailChange}
+              />
+            </GridItem>
+          ))}
+        </Grid>
+
+        <Typography variant="subtitle1" sx={{ mt: '32px' }}>
+          Vehicle type
+        </Typography>
+        <StyledDivider />
+        <Grid container spacing={2}>
+          {formOptions.map((option) => (
+            <GridItem item xs={6} sm={4} key={option.id}>
+              <FilterIcon
+                icon={option.icon}
+                id={option.id}
+                name={option.name}
+                handleChange={handleFormChange}
+              />
+            </GridItem>
+          ))}
+        </Grid>
+
+        <Box sx={{ mt: '64px' }}>
+          <CustomButton
+            variant="outlined"
+            aria-label="Clear Filters"
+            onClick={handleClearFilters}
+          >
+            Clear Filters
+          </CustomButton>
+        </Box>
+      </>
+    );
+  }, [location, details, form, locationsOptions]);
+
   return (
-    <Box>
-      <FilterTitle variant="h6">Location</FilterTitle>
+    <>
+      {isDesktop ? (
+        <Box>{renderFilters}</Box>
+      ) : (
+        <>
+          <CustomButton
+            aria-expanded={isModalOpen}
+            onClick={() => setIsModalOpen(true)}
+            aria-controls="filters"
+            aria-label="Filters"
+            sx={{
+              position: 'fixed',
+              top: '70px',
+              right: '24px',
+              zIndex: 100,
+            }}
+          >
+            <FilterListRoundedIcon /> Filters
+          </CustomButton>
 
-      <SelectController
-        value={location}
-        onChange={handleLocationChange}
-        options={locationsOptions}
-        placeholder="City"
-        icon={
-          <img
-            src="/icons/location.svg"
-            alt="Location"
-            style={{ width: '16px' }}
-          />
-        }
-      />
-
-      <FilterSubtitle variant="h6">Filters</FilterSubtitle>
-
-      <Typography variant="subtitle1" sx={{ mt: '14px' }}>
-        Vehicle equipment
-      </Typography>
-      <StyledDivider />
-      <Grid container spacing={2}>
-        {detailsOptions.map((option) => (
-          <GridItem item xs={6} sm={4} key={option.id}>
-            <FilterIcon
-              icon={option.icon}
-              id={option.id}
-              name={option.name}
-              selectedItems={Object.keys(details).filter(isDetailSelected)}
-              handleChange={handleDetailChange}
-            />
-          </GridItem>
-        ))}
-      </Grid>
-
-      <Typography variant="subtitle1" sx={{ mt: '32px' }}>
-        Vehicle type
-      </Typography>
-      <StyledDivider />
-      <Grid container spacing={2}>
-        {formOptions.map((option) => (
-          <GridItem item xs={6} sm={4} key={option.id}>
-            <FilterIcon
-              icon={option.icon}
-              id={option.id}
-              name={option.name}
-              selectedItems={form}
-              handleChange={handleFormChange}
-            />
-          </GridItem>
-        ))}
-      </Grid>
-
-      <Box sx={{ mt: '64px' }}>
-        {/* <CustomButton
-          variant="contained"
-          aria-label="Search"
-          onClick={handleSearchFilters}
-          sx={{ mr: 2 }}
-        >
-          Search
-        </CustomButton> */}
-        <CustomButton
-          variant="outlined"
-          aria-label="Clear Filters"
-          onClick={handleClearFilters}
-        >
-          Clear Filters
-        </CustomButton>
-      </Box>
-    </Box>
+          <CustomModal
+            open={isModalOpen}
+            onClose={handleModalClose}
+            title="Фільтрувати"
+          >
+            {renderFilters}
+          </CustomModal>
+        </>
+      )}
+    </>
   );
 };
 
