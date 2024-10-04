@@ -4,7 +4,8 @@ import { CamperAdvert } from './entities';
 const serverBaseURL = import.meta.env.VITE_SERVER_BASE_URL;
 
 export const main = async (): Promise<CamperAdvert[]> => {
-  const url = `${serverBaseURL}/campers`;
+  // const url = `${serverBaseURL}/campers`;
+  const url = `${serverBaseURL}/camper-rent/adverts`;
 
   try {
     const response = await axios.get<CamperAdvert[]>(url, {
