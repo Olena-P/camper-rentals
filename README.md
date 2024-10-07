@@ -1,6 +1,6 @@
 # Camper Rentals
 
-A web application for camper rentals in Ukraine.
+A web application for camper rentals in Ukraine, using MockAPI to fetch data instead of implementing a custom backend. All business logic was handled on the frontend.
 
 ## Links
 
@@ -23,12 +23,12 @@ A web application for camper rentals in Ukraine.
 
 ## Features
 
-- **Homepage:** General description of services.
+- **Homepage:** General description of services and a feedback form.
 - **Catalog:** View and filter campers.
 - **Favorites:** List of saved ads.
 
 ### Functionality
 
-- Pagination and filtering for ads.
-- Modal window for detailed camper view.
+- Filtering functionality and "load more" for fetching additional listings.
+- Modal windows for detailed camper views, including reviews and a feedback form.
 - Favorite ads management with state persistence.
